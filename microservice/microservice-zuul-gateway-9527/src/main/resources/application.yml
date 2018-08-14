@@ -1,0 +1,29 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservice-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+# 添加以下配置后,只能使用 http://myzuul.com:9527/lzf/mydept11/dept/list 代替 http://myzuul.com:9527/microservice-dept/dept/list来访问
+zuul:
+  routes:
+    mydept.serviceId: microservice-dept #真实微服务名称,对应注册到 eureka 的微服务所配置的微服务名 spring.application.name
+    mydept.path: /mydept11/**  #相当于别名,用于代替 mydept.serviceId 指向的微服务名称来访问微服务
+  ignored-services: "*"  #屏蔽所有的微服务名称,不对外暴露微服务的真实名称, 屏蔽单个写具体的微服务名, 屏蔽所有写 "*"
+  prefix: /lzf #统一前缀
+
+
+info:
+  app.name: lzf-microservice
+  company.name: www.lzf.com
+  build.artifactId: ${project.artifactId}
+  build.version: ${project.version}

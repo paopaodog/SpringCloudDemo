@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: microservice-config-provider-dept-client #需要从github上读取的资源文件的名称,不带yml后缀
+      profile: dev
+      label: master
+      uri: http://config3344.com:3344 #SpringCloudConfigServer配置中心的服务地址
